@@ -1,0 +1,62 @@
+<ng-container
+  *ngTemplateOutlet="chapters; context: { chaptersResponse: chaptersResponse$ | async }"
+></ng-container>
+<ng-template
+  #chapters
+  let-chaptersResponseReturned = "chaptersResponseReturned"
+  let-errorMessage="errorMessage"
+  let-chaptersResponse="memberResponse"
+  >
+<div class="container">
+  <div class="align-center text-center fill-height">
+    <img contain height="150" src="assets/Sun_God_Nika.png" />
+    <hr class="hr" />
+    <div class="text-body-2 font-weight-light mb-n1">Welcome to the</div>
+    <br />
+    <h1 class="text-h2 font-weight-bold">One Piece World Builder</h1>
+    <hr class="hr" />
+    <div class="row align-center justify-center">
+      <div class="col auto">
+        <div
+          *ngIf="errorMessage$.value.length > 0"
+          class="alert alert-danger"
+          role="alert"
+        >
+          <i class="fas fa-times-circle me-3"></i>{{ errorMessage$.value }}
+        </div>
+
+        
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Chapter Number</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Tome Number</th>
+              <th scope="col">Tome Japan Publish Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (chapter of chaptersResponse$.value; track chapter.id; let i = $index) {
+              <tr>
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                  {{ chapter.chapter_number }}
+                </td>
+                <td>{{ chapter.title }}</td>
+                <td>{{ chapter.description }}</td>
+                <td>
+                  {{ chapter.tome.tome_number }}
+                </td>
+                <td>{{  chapter.tome.title }}</td>
+                <td>{{  chapter.tome.tome_japan_date_publish }}</td>
+                </tr>
+            }
+          </tbody>
+        </table>    
+      </div>
+    </div>
+  </div>
+</div>
+</ng-template>
